@@ -54,9 +54,22 @@ function populateChart(data) {
         text: 'Time Spent Working Out (Last 7 days)',
       },
       scales: {
-        y: {
-          beginAtZero: true,
-        },
+        xAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display:true,
+            }
+          }
+        ],
+        yAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display: true,
+            }
+          }
+        ]
       },
     },
   });
