@@ -1,19 +1,4 @@
-function calculateTotalWeight(data) {
-  const totals = [];
 
-  data.forEach((workout) => {
-    const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
-      if (type === 'resistance') {
-        return total + weight;
-      }
-      return total;
-    }, 0);
-
-    totals.push(workoutTotal);
-  });
-
-  return totals;
-}
 
 function populateChart(data) {
   const durations = data.map(({ totalDuration }) => totalDuration);
@@ -22,15 +7,20 @@ function populateChart(data) {
   const line = document.querySelector('#canvas').getContext('2d');
   const bar = document.querySelector('#canvas2').getContext('2d');
 
+const weekDays = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
   const labels = data.map(({ day }) => {
     const date = new Date(day);
+    return weekDays[date.getDay()];
 
-    // Use JavaScript's `Intl` object to help format dates
-    return new Intl.DateTimeFormat('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-    }).format(date);
   });
 
   let lineChart = new Chart(line, {
@@ -118,6 +108,23 @@ function populateChart(data) {
       },
     },
   });
+}
+
+function calculateTotalWeight(data) {
+  const totals = [];
+
+  data.forEach((workout) => {
+    const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
+      if (type === 'resistance') {
+        return total + weight;
+      }
+      return total;
+    }, 0);
+
+    totals.push(workoutTotal);
+  });
+
+  return totals;
 }
 
 // get all workout data from back-end
